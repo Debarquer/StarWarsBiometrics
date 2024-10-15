@@ -44,9 +44,17 @@ function printPersonToCard(id){
         let ul = document.createElement('ul');
         ul.classList.add('list-group');
         for (let property in person.properties) {
+            if(property == 'created' || property == 'edited' || property == 'homeworld' || property == 'url'){
+                continue;
+            }
             let li = document.createElement('li');
             li.classList.add('list-group-item');
-            li.textContent = `${property}: ${person.properties[property]}`;
+            let propertyName = property;
+            if(propertyName.includes('_')){
+                propertyName = propertyName.replace('_', ' ');
+            }
+            propertyName = propertyName.charAt(0).toUpperCase() + propertyName.slice(1);
+            li.textContent = `${propertyName}: ${person.properties[property]}`;
             ul.appendChild(li);
         }
         cardBody.appendChild(ul);
